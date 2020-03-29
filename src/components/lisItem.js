@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 
-export const ListItem = ({ name, tel, site, mail, note }) => {
+export const ListItem = ({ name, tel, site, mail, warning, info }) => {
    const [infoVisible, setInfoVisible] = useState(false);
    const encodedName = encodeURIComponent(name);
    const encodedCity = encodeURIComponent(process.env.PREACT_APP_CITY);
