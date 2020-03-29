@@ -2,13 +2,10 @@ import { useState } from "preact/hooks";
 
 export const ListItem = ({ name, tel, site, mail, warning, info }) => {
    const [infoVisible, setInfoVisible] = useState(false);
+   const [warningVisible, setWarningVisible] = useState(false);
    const encodedName = encodeURIComponent(name);
    const encodedCity = encodeURIComponent(process.env.PREACT_APP_CITY);
    const searchUrl = `https://www.google.com/search?q=${encodedName}%20${encodedCity}`;
-
-   function handleClick() {
-      setInfoVisible(!infoVisible);
-   }
 
    return (
       <div class="rounded-lg border bg-gray-200 p-4 md:p-5 my-5 text-md lg:text-xl font-semibold text-gray-700">
@@ -24,23 +21,25 @@ export const ListItem = ({ name, tel, site, mail, warning, info }) => {
                </a>
             </span>
             <div class="flex">
-               {warning && (
+               {info && (
                   <span
-                     onClick={handleClick}
-                     class="inline-block mx-1 md:mx-2 w-8 h-8 cursor-pointer text-center leading-8 bg-yellow-300 rounded-lg"
+                     onClick={() => setInfoVisible(!infoVisible)}
+                     class="inline-block mx-1 md:mx-2 w-8 h-8 cursor-pointer text-center leading-8 rounded-lg"
                      role="img"
-                     aria-label="warning"
+                     aria-label="info"
                   >
                      ℹ️
                   </span>
                )}
-               {info && (
+               {warning && (
                   <span
-                     onClick={handleClick}
+                     onClick={() => setWarningVisible(!warningVisible)}
                      class="inline-block mx-1 md:mx-2 w-8 h-8 cursor-pointer text-center leading-8 bg-yellow-300 rounded-lg"
                      role="img"
-                     aria-label="info"
-                  ></span>
+                     aria-label="warning"
+                  >
+                     ⚠️
+                  </span>
                )}
                {site && (
                   <a href={`${site}`}>
@@ -80,10 +79,17 @@ export const ListItem = ({ name, tel, site, mail, warning, info }) => {
                   ))}
             </div>
          </div>
+         {warningVisible && (
+            <div class="block mt-10">
+               <p class="text-yellow-700 text-sm md:text-md lg:text-lg">
+                  {warning}
+               </p>
+            </div>
+         )}
          {infoVisible && (
             <div class="block mt-10">
                <p class="text-yellow-700 text-sm md:text-md lg:text-lg">
-                  {note}
+                  {info}
                </p>
             </div>
          )}
