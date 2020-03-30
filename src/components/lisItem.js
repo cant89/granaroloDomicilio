@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 
-export const ListItem = ({ name, tel, site, mail, warning, info }) => {
+export const ListItem = ({ name, tel, site, mail, warning, info, web }) => {
    const [infoVisible, setInfoVisible] = useState(false);
    const [warningVisible, setWarningVisible] = useState(false);
    const encodedName = encodeURIComponent(name);
@@ -13,7 +13,7 @@ export const ListItem = ({ name, tel, site, mail, warning, info }) => {
             <span>
                <a
                   class="hover:underline"
-                  href={searchUrl}
+                  href={web || searchUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                >
