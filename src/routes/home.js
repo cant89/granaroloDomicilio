@@ -66,7 +66,7 @@ export default class Home extends Component {
                   (forked from{" "}
                   <a
                      class="text-orange-500"
-                     href="https://github.com/tomma5o/ferraraDomicilio)"
+                     href="https://github.com/tomma5o/ferraraDomicilio"
                   >
                      Tomma5o
                   </a>
