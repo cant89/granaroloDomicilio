@@ -1,8 +1,10 @@
-import { useState } from "preact/hooks";
+import { useState, useContext } from "preact/hooks";
+import { Action } from "../index";
 
 export const ListItem = ({ name, tel, site, mail, warning, info, web }) => {
    const [infoVisible, setInfoVisible] = useState(false);
    const [warningVisible, setWarningVisible] = useState(false);
+   const action = useContext(Action);
    const encodedName = encodeURIComponent(name);
    const encodedCity = encodeURIComponent(process.env.PREACT_APP_CITY);
    const searchUrl = `https://www.google.com/search?q=${encodedName}%20${encodedCity}`;
@@ -44,7 +46,6 @@ export const ListItem = ({ name, tel, site, mail, warning, info, web }) => {
                {site && (
                   <a href={`${site}`}>
                      <span
-                        onClick={handleClick}
                         class="inline-block mx-1 md:mx-2 w-8 h-8 cursor-pointer text-center leading-8 bg-orange-300 rounded-lg"
                         role="img"
                         aria-label="website"
@@ -56,7 +57,6 @@ export const ListItem = ({ name, tel, site, mail, warning, info, web }) => {
                {mail && (
                   <a href={`mailto:${mail}`}>
                      <span
-                        onClick={handleClick}
                         class="inline-block mx-1 md:mx-2 w-8 h-8 cursor-pointer text-center leading-8 bg-blue-300 rounded-lg"
                         role="img"
                         aria-label="e-mail"
@@ -65,18 +65,17 @@ export const ListItem = ({ name, tel, site, mail, warning, info, web }) => {
                      </span>
                   </a>
                )}
-               {tel &&
-                  tel.map(num => (
-                     <a href={`tel:${num.replace(/\s/g, "")}`}>
-                        <span
-                           class="inline-block mx-1 md:mx-2 w-8 h-8 bg-green-300 text-center leading-8 rounded-lg cursor-pointer"
-                           role="img"
-                           aria-label="telephone"
-                        >
-                           📞
-                        </span>
-                     </a>
-                  ))}
+               {tel && (
+                  <a onClick={e => action.setPopupNumbers(e, tel)}>
+                     <span
+                        class="inline-block mx-2 w-8 h-8 bg-green-300 text-center leading-8 rounded-lg cursor-pointer"
+                        role="img"
+                        aria-label="telephone"
+                     >
+                        📞
+                     </span>
+                  </a>
+               )}
             </div>
          </div>
          {warningVisible && (
